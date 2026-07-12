@@ -1,0 +1,45 @@
+name: Build Plugin ZIP
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Validate PHP syntax
+        run: |
+          find . -name "*.php" -exec php -l {} \;
+        working-directory: wa-form-optin
+
+      - name: Build ZIP
+        run: |
+          zip -r wa-form-optin-${{ steps.version.outputs.VERSION }}.zip wa-form-optin/ \
+            -x "wa-form-optin/.github/*" \
+            -x "wa-form-optin/tests/*" \
+            -x "wa-form-optin/.gitignore" \
+            -x "wa-form-optin/node_modules/*"
+          echo "ZIP: wa-form-optin-${{ steps.version.outputs.VERSION }}.zip"
+
+      - name: Upload ZIP to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wa-form-optin-${{ steps.version.outputs.VERSION }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

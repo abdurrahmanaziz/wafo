@@ -1,0 +1,355 @@
+/* WA Form Optin - Public Frontend Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variables */
+.wafo-form-wrap {
+	--wafo-primary: #25D366;
+	--wafo-primary-dark: #128C7E;
+	--wafo-primary-light: #DCF8C6;
+	--wafo-white: #ffffff;
+	--wafo-gray-50: #f9fafb;
+	--wafo-gray-100: #f3f4f6;
+	--wafo-gray-200: #e5e7eb;
+	--wafo-gray-300: #d1d5db;
+	--wafo-gray-400: #9ca3af;
+	--wafo-gray-600: #4b5563;
+	--wafo-gray-700: #374151;
+	--wafo-gray-800: #1f2937;
+	--wafo-radius: 12px;
+	--wafo-radius-sm: 8px;
+	--wafo-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+	--wafo-shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Base */
+.wafo-form-wrap {
+	font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	max-width: 520px;
+	margin: 20px auto;
+	color: var(--wafo-gray-800);
+	line-height: 1.6;
+}
+
+.wafo-form-wrap * {
+	box-sizing: border-box;
+}
+
+.wafo-form {
+	background: var(--wafo-white);
+	border: none;
+	border-radius: var(--wafo-radius);
+	padding: 36px 32px;
+	box-shadow: var(--wafo-shadow);
+	transition: box-shadow 0.3s;
+}
+
+.wafo-form:focus-within {
+	box-shadow: var(--wafo-shadow-lg);
+}
+
+/* Form Header (optional branding) */
+.wafo-form-header {
+	text-align: center;
+	margin-bottom: 28px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--wafo-gray-200);
+}
+
+.wafo-form-header .wafo-wa-icon {
+	width: 48px;
+	height: 48px;
+	margin: 0 auto 12px;
+	background: linear-gradient(135deg, #25D366, #128C7E);
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wafo-form-header .wafo-wa-icon svg {
+	width: 28px;
+	height: 28px;
+}
+
+/* Fields */
+.wafo-form .wafo-field {
+	margin-bottom: 22px;
+}
+
+.wafo-form .wafo-field:last-of-type {
+	margin-bottom: 0;
+}
+
+.wafo-form .wafo-field label {
+	display: block;
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 8px;
+	color: var(--wafo-gray-700);
+	transition: color 0.2s;
+}
+
+.wafo-form .wafo-field label .wafo-required {
+	color: var(--wafo-primary);
+	margin-left: 2px;
+}
+
+.wafo-form .wafo-field.has-error label {
+	color: #dc2626;
+}
+
+.wafo-form .wafo-field input[type="text"],
+.wafo-form .wafo-field input[type="tel"],
+.wafo-form .wafo-field input[type="email"],
+.wafo-form .wafo-field textarea,
+.wafo-form .wafo-field select {
+	width: 100%;
+	padding: 12px 16px;
+	border: 2px solid var(--wafo-gray-200);
+	border-radius: var(--wafo-radius-sm);
+	font-size: 15px;
+	font-family: 'Poppins', sans-serif;
+	color: var(--wafo-gray-800);
+	background: var(--wafo-gray-50);
+	transition: all 0.2s;
+	box-shadow: none;
+	outline: none;
+}
+
+.wafo-form .wafo-field input:focus,
+.wafo-form .wafo-field textarea:focus,
+.wafo-form .wafo-field select:focus {
+	border-color: var(--wafo-primary);
+	background: var(--wafo-white);
+	box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.12);
+}
+
+.wafo-form .wafo-field input.has-error,
+.wafo-form .wafo-field textarea.has-error,
+.wafo-form .wafo-field select.has-error {
+	border-color: #dc2626;
+	background: #fef2f2;
+}
+
+.wafo-form .wafo-field input.has-error:focus,
+.wafo-form .wafo-field textarea.has-error:focus,
+.wafo-form .wafo-field select.has-error:focus {
+	box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+}
+
+.wafo-form .wafo-field textarea {
+	resize: vertical;
+	min-height: 100px;
+}
+
+.wafo-form .wafo-field select {
+	cursor: pointer;
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	padding-right: 36px;
+}
+
+/* Error message */
+.wafo-field-error {
+	font-size: 12px;
+	color: #dc2626;
+	margin-top: 6px;
+	display: none;
+}
+
+.wafo-field.has-error .wafo-field-error {
+	display: block;
+}
+
+/* Radio & Checkbox */
+.wafo-form .wafo-radio-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-right: 16px;
+	margin-bottom: 10px;
+	font-weight: 400;
+	cursor: pointer;
+	padding: 10px 16px;
+	border: 2px solid var(--wafo-gray-200);
+	border-radius: var(--wafo-radius-sm);
+	background: var(--wafo-gray-50);
+	transition: all 0.2s;
+}
+
+.wafo-form .wafo-radio-label:hover {
+	border-color: var(--wafo-primary);
+	background: #f0fdf4;
+}
+
+.wafo-form .wafo-radio-label input[type="radio"],
+.wafo-form .wafo-radio-label input[type="checkbox"] {
+	accent-color: var(--wafo-primary);
+	width: 18px;
+	height: 18px;
+}
+
+.wafo-form .wafo-radio-label:has(input:checked) {
+	border-color: var(--wafo-primary);
+	background: #f0fdf4;
+}
+
+/* Submit Button */
+.wafo-submit-wrap {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.wafo-submit-btn {
+	width: 100%;
+	background: linear-gradient(135deg, #25D366, #128C7E);
+	color: #fff;
+	border: none;
+	border-radius: var(--wafo-radius-sm);
+	padding: 16px 32px;
+	font-size: 16px;
+	font-weight: 600;
+	font-family: 'Poppins', sans-serif;
+	cursor: pointer;
+	transition: all 0.3s;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+	letter-spacing: 0.3px;
+}
+
+.wafo-submit-btn:hover {
+	background: linear-gradient(135deg, #128C7E, #075E54);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.wafo-submit-btn:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.wafo-submit-btn:disabled {
+	background: var(--wafo-gray-300);
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+.wafo-submit-btn .wafo-btn-icon {
+	display: inline-flex;
+}
+
+.wafo-submit-btn .wafo-btn-icon svg {
+	width: 20px;
+	height: 20px;
+}
+
+/* Spinner */
+.wafo-submit-spinner {
+	display: none;
+	width: 22px;
+	height: 22px;
+	border: 3px solid rgba(255, 255, 255, 0.3);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: wafoSpin 0.7s linear infinite;
+	vertical-align: middle;
+}
+
+.wafo-submit-btn:disabled .wafo-submit-spinner {
+	display: inline-block;
+}
+
+@keyframes wafoSpin {
+	to { transform: rotate(360deg); }
+}
+
+/* Success / Error Messages */
+.wafo-message {
+	margin-top: 20px;
+	padding: 16px;
+	border-radius: var(--wafo-radius-sm);
+	text-align: center;
+	font-size: 14px;
+	display: none;
+	animation: wafoFadeIn 0.3s ease;
+}
+
+.wafo-message.wafo-success {
+	background: #f0fdf4;
+	color: #166534;
+	border: 1px solid #bbf7d0;
+	box-shadow: 0 2px 8px rgba(34, 197, 94, 0.1);
+}
+
+.wafo-message.wafo-success::before {
+	content: "\2713";
+	display: inline-block;
+	margin-right: 8px;
+	font-weight: 700;
+}
+
+.wafo-message.wafo-error {
+	background: #fef2f2;
+	color: #991b1b;
+	border: 1px solid #fecaca;
+	box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+}
+
+.wafo-message.wafo-error::before {
+	content: "\2717";
+	display: inline-block;
+	margin-right: 8px;
+	font-weight: 700;
+}
+
+@keyframes wafoFadeIn {
+	from { opacity: 0; transform: translateY(-8px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Honeypot */
+.wafo-honeypot {
+	position: absolute !important;
+	left: -9999px !important;
+	top: -9999px !important;
+	opacity: 0 !important;
+	height: 0 !important;
+	width: 0 !important;
+	overflow: hidden !important;
+	pointer-events: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.wafo-form {
+		padding: 24px 20px;
+		border-radius: 8px;
+		margin: 0 12px;
+	}
+
+	.wafo-form .wafo-field input[type="text"],
+	.wafo-form .wafo-field input[type="tel"],
+	.wafo-form .wafo-field input[type="email"],
+	.wafo-form .wafo-field textarea,
+	.wafo-form .wafo-field select {
+		padding: 14px 16px;
+		font-size: 16px;
+	}
+
+	.wafo-submit-btn {
+		padding: 18px 32px;
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 380px) {
+	.wafo-form {
+		padding: 20px 16px;
+	}
+}
