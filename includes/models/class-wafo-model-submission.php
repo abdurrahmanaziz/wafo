@@ -135,8 +135,10 @@ class WAFO_Model_Submission {
 				'status'         => $data['status'],
 				'wa_send_status' => $data['wa_send_status'],
 				'ip_address'     => $data['ip_address'],
+				'created_at'     => current_time( 'mysql' ),
+				'updated_at'     => current_time( 'mysql' ),
 			),
-			array( '%d', '%s', '%s', '%s' )
+			array( '%d', '%s', '%s', '%s', '%s', '%s' )
 		);
 
 		return $result ? $wpdb->insert_id : false;
@@ -155,9 +157,12 @@ class WAFO_Model_Submission {
 
 		$result = $wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::table_name(),
-			array( 'status' => $status ),
+			array(
+				'status'    => $status,
+				'updated_at' => current_time( 'mysql' ),
+			),
 			array( 'id' => $id ),
-			array( '%s' ),
+			array( '%s', '%s' ),
 			array( '%d' )
 		);
 
@@ -177,9 +182,12 @@ class WAFO_Model_Submission {
 
 		$result = $wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::table_name(),
-			array( 'wa_send_status' => $status ),
+			array(
+				'wa_send_status' => $status,
+				'updated_at'     => current_time( 'mysql' ),
+			),
 			array( 'id' => $id ),
-			array( '%s' ),
+			array( '%s', '%s' ),
 			array( '%d' )
 		);
 

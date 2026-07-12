@@ -3,7 +3,7 @@
  * Plugin Name:       WA Form Optin
  * Plugin URI:        https://github.com/abdurrahmanaziz/wafo
  * Description:       Form kontak dengan custom field & integrasi WhatsApp. Setiap submission otomatis dikirim ke nomor WhatsApp admin.
- * Version:           0.1.3
+ * Version:           0.1.4
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            WAFO Team
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin constants.
  */
-define( 'WAFO_VERSION', '0.1.3' );
+define( 'WAFO_VERSION', '0.1.4' );
 define( 'WAFO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WAFO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WAFO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

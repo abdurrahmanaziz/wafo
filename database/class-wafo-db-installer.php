@@ -48,15 +48,15 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_forms';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			name VARCHAR(191) NOT NULL,
-			wa_message_template TEXT NOT NULL,
-			status ENUM('active','inactive') DEFAULT 'active',
-			created_by BIGINT UNSIGNED NOT NULL,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			deleted_at DATETIME NULL,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			name varchar(191) NOT NULL,
+			wa_message_template text NOT NULL,
+			status varchar(20) NOT NULL DEFAULT 'active',
+			created_by bigint(20) unsigned NOT NULL,
+			created_at datetime DEFAULT NULL,
+			updated_at datetime DEFAULT NULL,
+			deleted_at datetime DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_status (status),
 			KEY idx_deleted_at (deleted_at)
 		) {$charset_collate};";
@@ -76,14 +76,14 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_fields';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			form_id BIGINT UNSIGNED NOT NULL,
-			label VARCHAR(191) NOT NULL,
-			field_type VARCHAR(50) NOT NULL,
-			is_required TINYINT(1) DEFAULT 0,
-			order_index INT DEFAULT 0,
-			options TEXT NULL,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			form_id bigint(20) unsigned NOT NULL,
+			label varchar(191) NOT NULL,
+			field_type varchar(50) NOT NULL,
+			is_required tinyint(1) NOT NULL DEFAULT 0,
+			order_index int(11) NOT NULL DEFAULT 0,
+			options text DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_form_id (form_id)
 		) {$charset_collate};";
 
@@ -102,11 +102,11 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_wa_targets';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			form_id BIGINT UNSIGNED NOT NULL,
-			phone_number VARCHAR(20) NOT NULL,
-			label VARCHAR(100) NULL,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			form_id bigint(20) unsigned NOT NULL,
+			phone_number varchar(20) NOT NULL,
+			label varchar(100) DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_form_id (form_id)
 		) {$charset_collate};";
 
@@ -125,15 +125,15 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_submissions';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			form_id BIGINT UNSIGNED NOT NULL,
-			status ENUM('baru','dihubungi','selesai') DEFAULT 'baru',
-			wa_send_status ENUM('pending','sent','failed') DEFAULT 'pending',
-			ip_address VARCHAR(45) NOT NULL,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			deleted_at DATETIME NULL,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			form_id bigint(20) unsigned NOT NULL,
+			status varchar(20) NOT NULL DEFAULT 'baru',
+			wa_send_status varchar(20) NOT NULL DEFAULT 'pending',
+			ip_address varchar(45) NOT NULL,
+			created_at datetime DEFAULT NULL,
+			updated_at datetime DEFAULT NULL,
+			deleted_at datetime DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_form_id (form_id),
 			KEY idx_status (status),
 			KEY idx_created_at (created_at),
@@ -155,11 +155,11 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_submission_values';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			submission_id BIGINT UNSIGNED NOT NULL,
-			field_id BIGINT UNSIGNED NOT NULL,
-			value TEXT,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			submission_id bigint(20) unsigned NOT NULL,
+			field_id bigint(20) unsigned NOT NULL,
+			value text DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_submission_id (submission_id),
 			KEY idx_field_id (field_id)
 		) {$charset_collate};";
@@ -179,14 +179,14 @@ class WAFO_DB_Installer {
 		$table_name = $wpdb->prefix . 'wafo_submission_logs';
 
 		$sql = "CREATE TABLE {$table_name} (
-			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			submission_id BIGINT UNSIGNED NOT NULL,
-			actor_id BIGINT UNSIGNED NULL,
-			action VARCHAR(100) NOT NULL,
-			old_value VARCHAR(191) NULL,
-			new_value VARCHAR(191) NULL,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (id),
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			submission_id bigint(20) unsigned NOT NULL,
+			actor_id bigint(20) unsigned DEFAULT NULL,
+			action varchar(100) NOT NULL,
+			old_value varchar(191) DEFAULT NULL,
+			new_value varchar(191) DEFAULT NULL,
+			created_at datetime DEFAULT NULL,
+			PRIMARY KEY  (id),
 			KEY idx_submission_id (submission_id),
 			KEY idx_created_at (created_at)
 		) {$charset_collate};";

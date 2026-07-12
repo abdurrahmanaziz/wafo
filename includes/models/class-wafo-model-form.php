@@ -78,8 +78,10 @@ class WAFO_Model_Form {
 				'wa_message_template' => $data['wa_message_template'],
 				'status'              => $data['status'],
 				'created_by'          => $data['created_by'],
+				'created_at'          => current_time( 'mysql' ),
+				'updated_at'          => current_time( 'mysql' ),
 			),
-			array( '%s', '%s', '%s', '%d' )
+			array( '%s', '%s', '%s', '%d', '%s', '%s' )
 		);
 
 		return $result ? $wpdb->insert_id : false;
@@ -112,6 +114,9 @@ class WAFO_Model_Form {
 		foreach ( $allowed as $key => $value ) {
 			$formats[ $key ] = is_numeric( $value ) ? '%d' : '%s';
 		}
+
+		$allowed['updated_at'] = current_time( 'mysql' );
+		$formats['updated_at'] = '%s';
 
 		$result = $wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::table_name(),
