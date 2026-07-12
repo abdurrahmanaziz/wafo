@@ -72,6 +72,11 @@ class WAFO_Updater {
 		add_filter( 'plugins_api', array( $this, 'plugins_api_handler' ), 10, 3 );
 		add_filter( 'plugin_row_meta', array( $this, 'add_update_row_meta' ), 10, 2 );
 
+		// Clear cached update check on plugins page so WP re-checks.
+		if ( isset( $_GET['page'] ) && 'plugins.php' === $_GET['page'] ) {
+			delete_site_transient( 'update_plugins' );
+		}
+
 		// Schedule check every 12 hours.
 		if ( ! wp_next_scheduled( 'wafo_check_updates' ) ) {
 			wp_schedule_event( time(), 'twicedaily', 'wafo_check_updates' );
