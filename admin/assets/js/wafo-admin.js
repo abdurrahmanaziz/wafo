@@ -68,15 +68,26 @@
 		},
 
 		api: function (endpoint, method, data) {
-			return $.ajax({
+			var opts = {
 				url: wafoAdmin.restUrl + endpoint,
 				method: method || 'GET',
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader('X-WP-Nonce', wafoAdmin.restNonce);
-				},
-				data: (method === 'GET' || method === 'DELETE') ? data : JSON.stringify(data),
-				contentType: (method !== 'GET' && method !== 'DELETE') ? 'application/json' : undefined
-			});
+				}
+			};
+
+			if (method === 'GET') {
+				opts.data = data;
+			} else if (method === 'DELETE') {
+				opts.data = data || {};
+				opts.contentType = 'application/json';
+				opts.data = JSON.stringify(opts.data);
+			} else {
+				opts.data = JSON.stringify(data);
+				opts.contentType = 'application/json';
+			}
+
+			return $.ajax(opts);
 		},
 
 		/* ======================== Dashboard ======================== */
@@ -156,6 +167,7 @@
 				this.fieldsData = [];
 				this.targetsData = [];
 				this.resetBuilder();
+				this.loadFormsList();
 			} else {
 				$('#wafo-forms-list-view').hide();
 				$('#wafo-form-builder-view').show();
@@ -422,7 +434,7 @@
 			$('.wafo-save-spinner').addClass('is-active');
 			$('#wafo-save-status').text('');
 
-			var method = self.currentFormId ? 'POST' : 'POST';
+			var method = self.currentFormId ? 'PUT' : 'POST';
 			var endpoint = self.currentFormId ? 'forms/' + self.currentFormId : 'forms';
 
 			self.api(endpoint, method, payload).done(function (data) {
