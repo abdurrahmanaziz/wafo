@@ -101,16 +101,17 @@ class WAFO_Updater {
 		$local_version  = WAFO_VERSION;
 
 		if ( version_compare( $remote_version, $local_version, '>' ) ) {
-			$slug             = plugin_basename( $this->plugin_file );
-			$update           = new stdClass();
-			$update->slug     = dirname( $slug );
-			$update->plugin   = $slug;
-			$update->new_version = $remote_version;
-			$update->url      = $release['html_url'];
-			$update->package  = $release['zip_url'];
-			$update->tested   = '6.5';
-			$update->requires = '5.8';
-			$update->requires_php = '7.4';
+			$slug                  = plugin_basename( $this->plugin_file );
+			$update                = new stdClass();
+			$update->slug          = dirname( $slug );
+			$update->plugin        = $slug;
+			$update->new_version   = $remote_version;
+			$update->url           = $release['html_url'];
+			$update->package       = $release['zip_url'];
+			$update->tested        = '6.5';
+			$update->requires      = '5.8';
+			$update->requires_php  = '7.4';
+			$update->last_updated  = $release['published_at'];
 
 			$transient_data->response[ $slug ] = $update;
 		}
@@ -187,11 +188,13 @@ class WAFO_Updater {
 		) );
 
 		if ( is_wp_error( $response ) ) {
+			error_log( '[WAFO Updater] GitHub API error: ' . $response->get_error_message() );
 			return false;
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
 		if ( 200 !== $code ) {
+			error_log( '[WAFO Updater] GitHub API returned: ' . $code );
 			return false;
 		}
 
@@ -200,15 +203,32 @@ class WAFO_Updater {
 			return false;
 		}
 
-		// Find the zip asset.
+		// Find the zip asset (look for wafo*.zip or any .zip).
 		$zip_url = '';
 		if ( ! empty( $body['assets'] ) ) {
+			// First pass: look for plugin zip specifically.
 			foreach ( $body['assets'] as $asset ) {
-				if ( isset( $asset['name'] ) && preg_match( '/\.zip$/i', $asset['name'] ) ) {
+				if ( isset( $asset['name'] ) && preg_match( '/wafo.*\.zip$/i', $asset['name'] ) ) {
 					$zip_url = $asset['browser_download_url'];
 					break;
 				}
 			}
+			// Second pass: any .zip asset.
+			if ( empty( $zip_url ) ) {
+				foreach ( $body['assets'] as $asset ) {
+					if ( isset( $asset['name'] ) && preg_match( '/\.zip$/i', $asset['name'] ) ) {
+						$zip_url = $asset['browser_download_url'];
+						break;
+					}
+				}
+			}
+		}
+
+		// Fallback: construct zip URL from release tag.
+		if ( empty( $zip_url ) ) {
+			$tag = $body['tag_name'];
+			// Try the zipball URL as last resort.
+			$zip_url = 'https://github.com/' . $this->repo_url . '/archive/refs/tags/' . $tag . '.zip';
 		}
 
 		$release = array(
